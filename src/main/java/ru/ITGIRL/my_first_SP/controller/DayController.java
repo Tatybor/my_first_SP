@@ -8,12 +8,13 @@ import ru.ITGIRL.my_first_SP.model.Day;
 
 @RestController
 public class DayController {
-    @Autowired
-   private Day day;
 
-    @GetMapping ("/dayOfWeek")
-    public String getDayOfWeek (@RequestParam (value = "name") String name){
-        day =  Day.valueOf(name);
-       return String.format("Сегодня ", day.getRusDay());
+    @GetMapping("/dayOfWeek")
+    public String getDayOfWeek(@RequestParam(value = "name") String name) {
+        try {
+            return String.format("Сегодня %s ", Day.valueOf(name.toUpperCase()).getRussianDay());
+        } catch (IllegalArgumentException e) {
+            return "День введен неверно";
+        }
     }
 }
